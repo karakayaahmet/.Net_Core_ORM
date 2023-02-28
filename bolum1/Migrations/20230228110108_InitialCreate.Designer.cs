@@ -10,7 +10,7 @@ using bolum1;
 namespace bolum1.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20230228105530_InitialCreate")]
+    [Migration("20230228110108_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
