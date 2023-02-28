@@ -62,7 +62,9 @@ class Program
 
         // GetProductByName("Iphone");
 
-        Update(3);
+        // Update(3);
+
+        DeleteProduct(5);
     }
 
     static void AddProduct(){
@@ -147,6 +149,19 @@ class Program
                 db.SaveChanges();
 
                 Console.WriteLine("Güncelleme işlemi başarıyla gerçekleşti.");
+            }
+        }
+    }
+
+    static void DeleteProduct(int id){
+        using(var db = new ShopContext()){
+            var p = db.Products.Where(p => p.Id == id).FirstOrDefault();
+
+            if (p != null){
+                db.Products.Remove(p);
+                db.SaveChanges();
+
+                Console.WriteLine("Silme işlemi başarıyla gerçekleşti.");
             }
         }
     }
