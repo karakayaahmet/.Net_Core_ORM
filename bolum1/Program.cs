@@ -60,7 +60,9 @@ class Program
 
         //GetProductById(3);
 
-        GetProductByName("Iphone");
+        // GetProductByName("Iphone");
+
+        Update(3);
     }
 
     static void AddProduct(){
@@ -132,6 +134,19 @@ class Program
             foreach (var p in result)
             {
                 Console.WriteLine($"Ürün İsim : {p.Name}, Ürün Fiyat : {p.Price}");
+            }
+        }
+    }
+
+    static void Update(int id){
+        using(var db = new ShopContext()){
+            var result = db.Products.Where(p => p.Id == id).FirstOrDefault();
+
+            if (result != null){
+                result.Price *= 1.2;
+                db.SaveChanges();
+
+                Console.WriteLine("Güncelleme işlemi başarıyla gerçekleşti.");
             }
         }
     }
