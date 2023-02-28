@@ -29,30 +29,38 @@ class Program
 {
     static void Main(string[] args)
     {
-        using(var db = new ShopContext()){
-            var p = new Product(){Name = "Samsung S5", Price = 3000};
+        // using(var db = new ShopContext()){
+        //     var p = new Product(){Name = "Samsung S5", Price = 3000};
 
-            db.Products.Add(p);
+        //     db.Products.Add(p);
 
-            db.SaveChanges();
-        }
+        //     db.SaveChanges();
+        // }
 
-        using(var db = new ShopContext()){
-            var products = new List<Product>(){
-                new Product {Name = "Samsung S6", Price = 4000},
-                new Product {Name = "Samsung S7", Price = 5000},
-                new Product {Name = "Samsung S8", Price = 6000},
-                new Product {Name = "Samsung S9", Price = 7000}
-            };
+        // using(var db = new ShopContext()){
+        //     var products = new List<Product>(){
+        //         new Product {Name = "Samsung S6", Price = 4000},
+        //         new Product {Name = "Samsung S7", Price = 5000},
+        //         new Product {Name = "Samsung S8", Price = 6000},
+        //         new Product {Name = "Samsung S9", Price = 7000}
+        //     };
 
-            db.AddRange(products);
+        //     db.AddRange(products);
 
-            db.SaveChanges();
-        }
+        //     db.SaveChanges();
+        // }
 
-        AddProduct();
+        // AddProduct();
 
-        AddProducts();
+        // AddProducts();
+
+        // GetAllProducts();
+
+        // GetAllProducts2();
+
+        //GetProductById(3);
+
+        GetProductByName("Iphone");
     }
 
     static void AddProduct(){
@@ -82,6 +90,49 @@ class Program
             db.SaveChanges();
 
             Console.WriteLine("Ürünler Eklendi.");
+        }
+    }
+
+    static void GetAllProducts(){
+        using(var db = new ShopContext()){
+            var products = db.Products.ToList();
+
+            foreach (var p in products)
+            {
+                Console.WriteLine($"İsim : {p.Name}, Fiyat : {p.Price}");
+            }
+        }
+    }
+
+    static void GetAllProducts2(){
+        using(var db = new ShopContext()){
+            var products = db.Products.Select(p => new {p.Name, p.Price}).ToList();
+
+            foreach (var p in products)
+            {
+                Console.WriteLine($"Ürün İsim : {p.Name}, Ürün Fiyat : {p.Price}");
+            }
+        }
+    }
+
+    static void GetProductById(int id){
+        using(var db = new ShopContext()){
+            var result = db.Products.Where(p => p.Id == id).FirstOrDefault();
+
+            if (result != null){
+                Console.WriteLine($"Ürün İsim : {result.Name}, Ürün Fiyat : {result.Price}");
+            }
+        }
+    }
+
+    static void GetProductByName(string name){
+        using(var db = new ShopContext()){
+            var result = db.Products.Where(p => p.Name.ToLower().Contains(name)).ToList();
+
+            foreach (var p in result)
+            {
+                Console.WriteLine($"Ürün İsim : {p.Name}, Ürün Fiyat : {p.Price}");
+            }
         }
     }
 }
